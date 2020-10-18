@@ -9,15 +9,11 @@ node {
                 
                 stage('Setup') 
                 {
-                  for(def tfModule in terraformModules)
+                  for(def terraformModule in terraformModules)
                   {
-                      dir(tfModule) 
+                      dir(terraformModule) 
                       {
-                          stage("Validate ${tfModule}")
-                          {                            
-                              sh 'terragrunt validate'
-                              sh 'terragrunt fmt -recursive -diff'                            
-                          }
+                        stageValidate(terraformModule)
                       }
                   }
                 }
@@ -26,3 +22,12 @@ node {
     }
 }  
 
+def stageValidate(tfModule)
+{
+  stage("Validate ${tfModule}")
+  withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
+  {
+    sh 'terragrunt validate'
+    sh 'terragrunt fmt -recursive -diff'
+  }
+}
