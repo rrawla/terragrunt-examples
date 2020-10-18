@@ -1,10 +1,10 @@
 abcs = ['a', 'b', 'c']
 node('master') {
 
-            stage('checkout code')
-            {
-                git 'https://github.com/rrawla/terragrunt-examples.git'
-            }
+            // stage('checkout code')
+            // {
+            //     git 'https://github.com/rrawla/terragrunt-examples.git'
+            // }
             stage('Test 1: loop of echo statements') 
             {
               echo_all(abcs)
