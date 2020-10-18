@@ -30,7 +30,7 @@ input variables of that module:
 ```hcl
 # Use Terragrunt to download the module code
 terraform {
-  source = "git::git@github.com:gruntwork-io/terragrunt-infrastructure-modules-example.git//path/to/module?ref=v0.0.1"
+  source = "git::git@github.com:gruntwork-io/modules.git//path/to/module?ref=v0.0.1"
 }
 
 # Fill in the variables for that module
@@ -50,7 +50,7 @@ command in that folder:
 ```
 > terragrunt apply
 [terragrunt] Reading Terragrunt config file at terragrunt.hcl
-[terragrunt] Downloading Terraform configurations from git::git@github.com:gruntwork-io/terragrunt-infrastructure-modules-example.git//path/to/module?ref=v0.0.1
+[terragrunt] Downloading Terraform configurations from git::git@github.com:gruntwork-io/modules.git//path/to/module?ref=v0.0.1
 [terragrunt] Copying files from . into .terragrunt-cache
 [terragrunt] Running command: terraform apply
 [...]

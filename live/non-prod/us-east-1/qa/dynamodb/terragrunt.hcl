@@ -9,7 +9,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source="../../../../..//terragrunt-infrastructure-modules-example/dynamodb"
+  source="../../../../..//modules/dynamodb"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -50,7 +50,7 @@ inputs = {
 
   tags = {
     Terraform   = "true"
-    Environment = "staging"
+    Environment = "dev"
   }
 }
 
