@@ -29,6 +29,7 @@ def executeStages(terraformModules)
         stagePlan(terraformModule)
         stageCompliance(terraformModule)
         stageApply(terraformModule)
+        stageCleanUp(terraformModule)
       }
   }
 }
@@ -52,11 +53,9 @@ def stagePlan(tfModule)
   }
 }
 def stageCompliance(tfModule) {
-  stage("Plan and Compliance Check")
+  stage("Compliance Check")
   {
-  
     sh 'snitch2 static -c ./compliance.config.yml -p tgf.json  -g tgf.graph'
-    sh 'rm tgf.graph tgf.json'
   }
 }
 
@@ -64,5 +63,11 @@ def stageApply(tfModule) {
   stage('Deploy')
   {
     sh 'echo Apply Terraform..'
+  }
+}
+def stageCleanUp(tfModule) {
+  stage('Clean Up')
+  {
+     sh 'rm tgf.graph tgf.json'
   }
 }
