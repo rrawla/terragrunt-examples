@@ -1,5 +1,5 @@
 terraformModules = ['/non-prod/us-east-1/qa/dynamodb']
-node('master') {
+node {
    docker.withTool('docker') 
    {  
       docker.withRegistry('https://005901988046.dkr.ecr.ca-central-1.amazonaws.com/','ecr:ca-central-1:aws-instance-role') 
@@ -18,6 +18,7 @@ node('master') {
       }
     }
 }  
+
 @NonCPS
 def executeStages(terraformModule)
 {
@@ -25,6 +26,7 @@ def executeStages(terraformModule)
     stageValidate(terraformModule)
   }
 }
+
 @NonCPS
 def stageValidate(tfModule)
 {
