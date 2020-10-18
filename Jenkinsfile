@@ -14,12 +14,9 @@ node {
                       dir(tfModule) 
                       {
                           stage("Validate ${tfModule}")
-                          {
-                            withEnv("TERRAGRUNT_DISABLE_INIT=true")
-                            {
+                          {                            
                               sh 'terragrunt validate'
-                              sh 'terragrunt fmt -recursive -diff'
-                            }
+                              sh 'terragrunt fmt -recursive -diff'                            
                           }
                       }
                   }
