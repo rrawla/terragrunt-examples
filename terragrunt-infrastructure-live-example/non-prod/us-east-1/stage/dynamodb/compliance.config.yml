@@ -1,0 +1,7 @@
+provider :
+  region : us-east-1
+rules:
+  #- aws-dynamodb-encryption: {}
+  - aws-dynamodb-point-in-time-recovery: 
+      exclude :
+        - my-other-accounts

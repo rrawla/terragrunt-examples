@@ -1,19 +1,40 @@
-abcs = ['a', 'b', 'c']
+terraformModules = ['/non-prod/us-east-1/qa/dynamodb']
 node('master') {
-
-            // stage('checkout code')
-            // {
-            //     git 'https://github.com/rrawla/terragrunt-examples.git'
-            // }
-            stage('Test 1: loop of echo statements') 
-            {
-              echo_all(abcs)
-            }
-  }
-
-@NonCPS // has to be NonCPS or the build breaks on the call to .each
-def echo_all(list) {
-    list.each { item ->
-        echo "Hello ${item}"
+   docker.withTool('docker') 
+   {  
+      docker.withRegistry('https://005901988046.dkr.ecr.ca-central-1.amazonaws.com/','ecr:ca-central-1:aws-instance-role') 
+      {
+          docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:latest').inside 
+          {
+                                  stage('checkout code')
+                                  {
+                                      git 'https://github.com/rrawla/terragrunt-examples.git'
+                                  }
+                                  stage('Test 1: loop of echo statements') 
+                                  {
+                                    for(def terraformModule in terraformModules)
+                                    {
+                                      execureStages(terraformModule)
+                                    }
+                                  }
+          }
+      }
     }
+}  
+
+def executeStages(terraformModule)
+{
+  dir(terraformModule) {
+    stageValidate(terraformModule)
+  }
+}
+
+def stageValidate(tfModule)
+{
+  stage("Validate ${tfModule}")
+  withEnv("TERRAGRUNT_DISABLE_INIT=true")
+  {
+    sh 'terragrunt validate'
+    sh 'terragrunt fmt -recursive -diff'
+  }
 }

@@ -19,7 +19,7 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  name      = "my-dynamodb-table"
+  name      = "my-dynamodb-poc-table"
   hash_key  = "id"
   range_key = "title"
 
@@ -50,7 +50,7 @@ inputs = {
 
   tags = {
     Terraform   = "true"
-    Environment = "staging"
+    Environment = "dev"
   }
 }
 
