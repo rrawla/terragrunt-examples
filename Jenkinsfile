@@ -11,23 +11,26 @@ node {
                 {
                   checkout scm
                 }
-                stage('Setup') 
+                stage('Execute') 
                 {
-                    
-                  for(def terraformModule in terraformModules)
-                  {
-                      dir(terraformModule) 
-                      {
-                        stageValidate(terraformModule)
-                        stageCompliance(terraformModule)
-                        stageApply(terraformModule)
-                      }
-                  }
+                  executeStages(terraformModules)                    
                 }
           }
       }
     }
 }  
+def executeStages(terraformModules)
+{
+  for(def terraformModule in terraformModules)
+  {
+      dir(terraformModule) 
+      {
+        stageValidate(terraformModule)
+        stageCompliance(terraformModule)
+        stageApply(terraformModule)
+      }
+  }
+}
 
 def stageValidate(tfModule)
 {
