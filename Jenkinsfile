@@ -11,21 +11,16 @@ node {
                 {
                   for(def terraformModule in terraformModules)
                   {
-                    executeStages(terraformModule)
+                      dir(terraformModule) 
+                      {
+                        stageValidate(terraformModule)
+                      }
                   }
                 }
           }
       }
     }
 }  
-
-@NonCPS
-def executeStages(terraformModule)
-{
-  dir(terraformModule) {
-    stageValidate(terraformModule)
-  }
-}
 
 @NonCPS
 def stageValidate(tfModule)
