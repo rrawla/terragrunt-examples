@@ -7,7 +7,7 @@ module "my-table" {
   attributes = var.attributes 
   global_secondary_indexes = var.global_secondary_indexes
   tags = var.tags
-  point_in_time_recovery_enabled=false 
+  point_in_time_recovery_enabled=var.point_in_time_recovery_enabled 
 }
 
 
