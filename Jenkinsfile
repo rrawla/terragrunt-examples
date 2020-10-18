@@ -19,6 +19,7 @@ node {
                       dir(terraformModule) 
                       {
                         stageValidate(terraformModule)
+                        stageCompliance(terraformModule)
                       }
                   }
                 }
@@ -33,7 +34,17 @@ def stageValidate(tfModule)
     withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
     {
       sh 'terragrunt validate'
-      sh 'terragrunt fmt -recursive -diff'
     }
+  }
+}
+
+def stageCompliance(tfModule) {
+  stage("Perfoming Compliance Check ${tfModule}")
+  {
+    sh 'terragrunt plan -out=tgf.plan  -lock=false'
+    sh 'terragrunt show -json tgf.plan > tgf.json'
+    sh 'terragrunt graph > tgf.graph'
+    sh 'snitch2 static -c ./compliance.config.yml -p tgf.json  -g tgf.graph'
+    sh 'rm tgf.graph tgf.json tgf.plan'
   }
 }
