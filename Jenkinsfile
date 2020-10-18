@@ -45,6 +45,6 @@ def stageCompliance(tfModule) {
     sh 'terragrunt show -json tgf.plan > tgf.json'
     sh 'terragrunt graph > tgf.graph'
     sh 'snitch2 static -c ./compliance.config.yml -p tgf.json  -g tgf.graph'
-    sh 'rm tgf.graph tgf.json tgf.plan'
+    sh 'rm tgf.graph tgf.json'
   }
 }
