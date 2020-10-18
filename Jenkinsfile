@@ -26,6 +26,7 @@ def executeStages(terraformModules)
       dir(terraformModule) 
       {
         stageValidate(terraformModule)
+        stagePlan(terraformModule)
         stageCompliance(terraformModule)
         stageApply(terraformModule)
       }
@@ -41,13 +42,19 @@ def stageValidate(tfModule)
     }
   }
 }
-
-def stageCompliance(tfModule) {
-  stage("Plan and Compliance Check")
+def stagePlan(tfModule)
+{
+  stage('Plan')
   {
     sh 'terragrunt plan -out=tgf.plan  -lock=false'
     sh 'terragrunt show -json tgf.plan > tgf.json'
     sh 'terragrunt graph > tgf.graph'
+  }
+}
+def stageCompliance(tfModule) {
+  stage("Plan and Compliance Check")
+  {
+  
     sh 'snitch2 static -c ./compliance.config.yml -p tgf.json  -g tgf.graph'
     sh 'rm tgf.graph tgf.json'
   }
