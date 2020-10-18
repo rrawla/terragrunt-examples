@@ -22,7 +22,6 @@ node {
     }
 }  
 
-@NonCPS
 def stageValidate(tfModule)
 {
   stage("Validate ${tfModule}")
