@@ -4,7 +4,7 @@ node {
    {  
       docker.withRegistry('https://005901988046.dkr.ecr.ca-central-1.amazonaws.com/','ecr:ca-central-1:aws-instance-role') 
       {
-          docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:latest').inside 
+          docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:0.5.3').inside 
           {
                stage('init check')
                 {
@@ -33,7 +33,6 @@ def stageValidate(tfModule)
   stage("Validate ${tfModule}")
   withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
   {
-    sh 'terragrunt --version'
     sh 'terragrunt validate'
     sh 'terragrunt fmt -recursive -diff'
   }
