@@ -6,17 +6,14 @@ node('master') {
       {
           docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:latest').inside 
           {
-                                  stage('checkout code')
-                                  {
-                                      git 'https://github.com/rrawla/terragrunt-examples.git'
-                                  }
-                                  stage('Test 1: loop of echo statements') 
-                                  {
-                                    for(def terraformModule in terraformModules)
-                                    {
-                                      execureStages(terraformModule)
-                                    }
-                                  }
+              
+                stage('Test 1: loop of echo statements') 
+                {
+                  for(def terraformModule in terraformModules)
+                  {
+                    execureStages(terraformModule)
+                  }
+                }
           }
       }
     }
