@@ -1,5 +1,5 @@
 abcs = ['a', 'b', 'c']
-node('main') {
+node('master') {
 
             stage('checkout code')
             {
