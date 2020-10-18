@@ -26,10 +26,12 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "aws" {
-  region = "${local.aws_region}"
-
-  # Only these AWS Account IDs may be operated on by this template
-  allowed_account_ids = ["${local.account_id}"]
+   version = "~> 3.0"
+   region   = "us-east-1"
+   assume_role {
+    role_arn     = "arn:aws:iam::005901988046:role/pipeline-services-terraform"
+    session_name = "pipeline-services"
+  }
 }
 EOF
 }
