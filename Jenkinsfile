@@ -13,7 +13,12 @@ node {
                   {
                       dir(terraformModule) 
                       {
-                        stageValidate(terraformModule)
+                          stage("Validate ${tfModule}")
+                          withEnv("TERRAGRUNT_DISABLE_INIT=true")
+                          {
+                            sh 'terragrunt validate'
+                            sh 'terragrunt fmt -recursive -diff'
+                          }
                       }
                   }
                 }
@@ -22,12 +27,3 @@ node {
     }
 }  
 
-def stageValidate(tfModule)
-{
-  stage("Validate ${tfModule}")
-  withEnv("TERRAGRUNT_DISABLE_INIT=true")
-  {
-    sh 'terragrunt validate'
-    sh 'terragrunt fmt -recursive -diff'
-  }
-}
