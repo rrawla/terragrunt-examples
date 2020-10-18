@@ -18,14 +18,14 @@ node('master') {
       }
     }
 }  
-
+@NonCPS
 def executeStages(terraformModule)
 {
   dir(terraformModule) {
     stageValidate(terraformModule)
   }
 }
-
+@NonCPS
 def stageValidate(tfModule)
 {
   stage("Validate ${tfModule}")
