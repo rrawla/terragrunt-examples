@@ -6,15 +6,14 @@ node {
       {
           docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:0.5.3').inside 
           {
-               stage('init check')
+              
+               stage('Checkout')
                 {
-                    sh  'terraform -v'
-                    sh  'snitch2 -v'
-                    sh  'terragrunt --version'
-                    sh  'aws --version'
+                  checkout scm
                 }
                 stage('Setup') 
                 {
+                    
                   for(def terraformModule in terraformModules)
                   {
                       dir(terraformModule) 
@@ -30,10 +29,11 @@ node {
 
 def stageValidate(tfModule)
 {
-  stage("Validate ${tfModule}")
-  withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
-  {
-    sh 'terragrunt validate'
-    sh 'terragrunt fmt -recursive -diff'
+  stage("Validate ${tfModule}"){
+    withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
+    {
+      sh 'terragrunt validate'
+      sh 'terragrunt fmt -recursive -diff'
+    }
   }
 }
