@@ -9,9 +9,9 @@ node {
                 
                 stage('Setup') 
                 {
-                  for(def terraformModule in terraformModules)
+                  for(def tfModule in terraformModules)
                   {
-                      dir(terraformModule) 
+                      dir(tfModule) 
                       {
                           stage("Validate ${tfModule}")
                           withEnv("TERRAGRUNT_DISABLE_INIT=true")
