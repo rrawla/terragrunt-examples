@@ -1,4 +1,4 @@
-terraformModules = ['/non-prod/us-east-1/qa/dynamodb']
+terraformModules = ['/live/non-prod/us-east-1/qa/dynamodb']
 node {
    docker.withTool('docker') 
    {  
