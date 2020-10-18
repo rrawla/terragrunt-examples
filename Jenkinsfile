@@ -27,6 +27,7 @@ def stageValidate(tfModule)
   stage("Validate ${tfModule}")
   withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
   {
+    sh 'terragrunt --version'
     sh 'terragrunt validate'
     sh 'terragrunt fmt -recursive -diff'
   }
