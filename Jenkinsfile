@@ -11,7 +11,7 @@ node('master') {
                 {
                   for(def terraformModule in terraformModules)
                   {
-                    execureStages(terraformModule)
+                    executeStages(terraformModule)
                   }
                 }
           }
