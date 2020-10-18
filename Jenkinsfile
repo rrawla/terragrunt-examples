@@ -20,6 +20,7 @@ node {
                       {
                         stageValidate(terraformModule)
                         stageCompliance(terraformModule)
+                        stageApply(terraformModule)
                       }
                   }
                 }
@@ -30,7 +31,7 @@ node {
 
 def stageValidate(tfModule)
 {
-  stage("Validate ${tfModule}"){
+  stage("Validating"){
     withEnv(["TERRAGRUNT_DISABLE_INIT=true"])
     {
       sh 'terragrunt validate'
@@ -39,12 +40,19 @@ def stageValidate(tfModule)
 }
 
 def stageCompliance(tfModule) {
-  stage("Perfoming Compliance Check ${tfModule}")
+  stage("Plan and Compliance Check")
   {
     sh 'terragrunt plan -out=tgf.plan  -lock=false'
     sh 'terragrunt show -json tgf.plan > tgf.json'
     sh 'terragrunt graph > tgf.graph'
     sh 'snitch2 static -c ./compliance.config.yml -p tgf.json  -g tgf.graph'
     sh 'rm tgf.graph tgf.json'
+  }
+}
+
+def stageApply(tfModule) {
+  stage('Deploy')
+  {
+    sh 'echo Apply Terraform..'
   }
 }
