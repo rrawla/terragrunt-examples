@@ -6,10 +6,7 @@ node {
       {
           docker.image('005901988046.dkr.ecr.ca-central-1.amazonaws.com/matter-compliance:latest').inside 
           {
-                stage('Checkout')
-                {
-                  git 'https://github.com/rrawla/terragrunt-examples.git'
-                }
+                
                 stage('Setup') 
                 {
                   for(def terraformModule in terraformModules)
