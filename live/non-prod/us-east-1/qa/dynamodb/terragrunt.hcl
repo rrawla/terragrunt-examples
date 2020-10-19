@@ -37,7 +37,7 @@ inputs = {
       type = "N"
     }
   ]
-  point_in_time_recovery_enabled=true
+  point_in_time_recovery_enabled=false
   global_secondary_indexes = [
     {
       name               = "TitleIndex"
